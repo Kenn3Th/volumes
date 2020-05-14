@@ -1,5 +1,10 @@
 echo "MariaDB database setup with Galera Cluster and Maxscale!"
 
+echo "Creating datadir"
+sudo mkdir ~/volumes/db1/datadir
+sudo mkdir ~/volumes/db2/datadir
+sudo mkdir ~/volumes/db3/datadir
+
 echo "Making db1"
 docker run -d \
 --name db1 \
@@ -89,8 +94,53 @@ mariadb/maxscale:latest
 
 printf "\n"
 echo "Going to sleep... zzzZZZzzz"
-sleep 20
+sleep 30
 printf "\n"
+
+
+echo "Reading IPs from containers"
+ip_web1=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" web1)
+sleep 1
+ip_web2=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" web2)
+sleep 1
+ip_web3=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" web3)
+sleep 1
+ip_lb=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" lb)
+sleep 1
+ip_db1=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db1)
+sleep 1
+ip_db2=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db2)
+sleep 1
+ip_db3=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db3)
+sleep 1
+ip_dbproxy=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" dbproxy)
+sleep 1
+
+echo "Adding IPs to /etc/hosts"
+
+echo $ip_web1
+docker exec db1 bash -c 'echo '"$ip_web1"'      web1>> /etc/hosts'
+sleep 1
+echo $ip_web2
+docker exec db1 bash -c 'echo '"$ip_web2"'      web2>> /etc/hosts'
+sleep 1
+echo $ip_web3
+docker exec db1 bash -c 'echo '"$ip_web3"'      web3>> /etc/hosts'
+sleep 1
+echo $ip_lb
+docker exec db1 bash -c 'echo '"$ip_lb"'        lb>> /etc/hosts'
+sleep 1
+echo $ip_db1
+docker exec db1 bash -c 'echo '"$ip_db1"'       db1>> /etc/hosts'
+sleep 1
+echo $ip_db2
+docker exec db1 bash -c 'echo '"$ip_db2"'       db2>> /etc/hosts'
+sleep 1
+echo $ip_db3
+docker exec db1 bash -c 'echo '"$ip_db3"'       db3>> /etc/hosts'
+sleep 1
+echo $ip_dbproxy
+docker exec db1 bash -c 'echo '"$ip_dbproxy"'   maxscale>> /etc/hosts'
 
 echo "Hello!! Lets see if this works!"
 
@@ -100,6 +150,9 @@ docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\
 echo "It should be cluster size 3"
 
 printf "\n"
+
+sleep 10
+
 echo "MySQL setup for db-servers"
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "create user \"dats44\"@\"%\" identified by \"sure caught drop\""'
@@ -117,6 +170,22 @@ sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant select on mysql.tables_priv to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant show databases on *.* to \"maxscaleuser\"@\"172.17.0.9\""'
+
+
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant UPDATE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant DELETE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant UPDATE on studentinfo.* to \"dats44\"@\"%\""'
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant DELETE on studentinfo.* to \"dats44\"@\"%\""'
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"dats44\"@\"%\""'
+
 
 sleep 5
 printf "\n"
