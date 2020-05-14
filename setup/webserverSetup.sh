@@ -30,5 +30,9 @@ echo "Making lb"
 docker run -d \
 --publish 80:80 \
 --name lb \
+--add-host lb:172.17.0.5 \
+--add-host web1:172.17.0.2 \
+--add-host web2:172.17.0.3 \
+--add-host web3:172.17.0.4 \
 -v ~/volumes/lb:/usr/local/etc \
 haproxy:latest
