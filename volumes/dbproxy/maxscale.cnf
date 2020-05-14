@@ -1,0 +1,57 @@
+##############################################
+##  Configurationfile for MariaDB MaxScale  ##
+##############################################
+[MaxScale]
+threads=4
+
+#######################
+##   Service Setup   ##
+#######################
+[Galera-Service]
+type=service
+router=readwritesplit
+servers=db1,db2,db3
+user=maxscaleuser
+password=sure caught drop
+
+######################
+##  Listener setup  ##
+######################
+[Galera-Listener]
+type=listener
+service=Galera-Service
+protocol=MariaDBClient
+port=3306
+address=0.0.0.0
+
+#######################
+##  Cluster servers  ##
+#######################
+[db1]
+type=server
+address=dbgc1
+port=3306
+protocol=MariaDBBackend
+
+[db2]
+type=server
+address=dbgc2
+port=3306
+protocol=MariaDBBackend
+
+[db3]
+type=server
+address=dbgc3
+port=3306
+protocol=MariaDBBackend
+
+#####################
+##  Monitor setup  ##
+#####################
+[Galera-Monitor]
+type=monitor
+module=galeramon
+servers=db1, db2, db3
+user=maxscaleuser
+password=sure caught drop
+monitor_interval=1000
