@@ -63,7 +63,7 @@ echo "Inserting Safe to Bootstrap"
 
 sleep 5
 
-echo "safe_to_bootstrap: 1" >> /home/volumes/db1/datadir/grastate.dat
+echo "safe_to_bootstrap: 1" >> /volumes/db1/datadir/grastate.dat
 sleep 5
 
 printf "\n"
