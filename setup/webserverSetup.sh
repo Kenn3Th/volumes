@@ -30,5 +30,5 @@ echo "Making lb"
 docker run -d \
 --publish 80:80 \
 --name lb \
--v ~/volumes/lb/:/usr/local/etc \
+-v ~/volumes/lb:/usr/local/etc \
 haproxy:latest
