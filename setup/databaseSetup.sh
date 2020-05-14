@@ -14,8 +14,8 @@ docker run -d \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
--v /home/volumes/db1/conf.d:/etc/mysql/mariadb.conf.d \
--v /home/volumes/db1/datadir:/var/lib/mysql \
+-v ~/volumes/db1/conf.d:/etc/mysql/mariadb.conf.d \
+-v ~/volumes/db1/datadir:/var/lib/mysql \
 mariadb/server:10.4
 
 sleep 10
@@ -34,8 +34,8 @@ docker run -d \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
--v /home/volumes/db2/conf.d:/etc/mysql/mariadb.conf.d \
--v /home/volumes/db2/datadir:/var/lib/mysql \
+-v ~/volumes/db2/conf.d:/etc/mysql/mariadb.conf.d \
+-v ~/volumes/db2/datadir:/var/lib/mysql \
 mariadb/server:10.4
 
 sleep 10
@@ -54,8 +54,8 @@ docker run -d \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
--v /home/volumes/db3/conf.d:/etc/mysql/mariadb.conf.d \
--v /home/volumes/db3/datadir:/var/lib/mysql \
+-v ~/volumes/db3/conf.d:/etc/mysql/mariadb.conf.d \
+-v ~/volumes/db3/datadir:/var/lib/mysql \
 mariadb/server:10.4
 
 printf "\n"
@@ -63,7 +63,7 @@ echo "Inserting Safe to Bootstrap"
 
 sleep 5
 
-echo "safe_to_bootstrap: 1" >> /volumes/db1/datadir/grastate.dat
+echo "safe_to_bootstrap: 1" >> ~/volumes/db1/datadir/grastate.dat
 sleep 5
 
 printf "\n"
@@ -84,7 +84,7 @@ docker run -d \
 --env MYSQL_ROOT_PASSWORD="maxscalepass" \
 --env MYSQL_USER="maxscaleuser" \
 --env MYSQL_PASSWORD="sure caught drop" \
--v /home/volumes/dbproxy/maxscale.cnf:/etc/maxscale.cnf \
+-v ~/volumes/dbproxy/maxscale.cnf:/etc/maxscale.cnf \
 mariadb/maxscale:latest
 
 printf "\n"
@@ -131,7 +131,7 @@ docker exec dbproxy maxctrl list servers
 
 printf "\n"
 echo "copying studentinfo to db containers"
-docker cp /home/webapp/database/studentinfo-db.sql db1:/studentinfo-db.sql
+docker cp ~/volumes/webapp/database/studentinfo-db.sql db1:/studentinfo-db.sql
 sleep 2
 echo "Checking the databases"
 docker exec db1 bash -c 'mysql -uroot -e "source studentinfo-db.sql"'
