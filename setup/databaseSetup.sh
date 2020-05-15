@@ -1,6 +1,6 @@
 source ~/volumes/setup/parameters.sh
 
-printf "\n \nMariaDB database setup with Galera Cluster and Maxscale!\n \n"
+printf "\nMariaDB database setup with Galera Cluster and Maxscale!\n \n"
 
 echo "Creating datadir"
 sudo mkdir ~/volumes/db1/datadir
@@ -18,9 +18,9 @@ docker run -d \
 --add-host dbgc2:$db2_ip \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
---env MYSQL_ROOT_PASSWORD="rootpass" \
---env MYSQL_USER="dats44" \
---env MYSQL_PASSWORD="sure caught drop" \
+--env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+--env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db1/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db1/datadir:/var/lib/mysql \
 mariadb/server:10.4
@@ -38,9 +38,9 @@ docker run -d \
 --add-host dbgc2:$db2_ip \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
---env MYSQL_ROOT_PASSWORD="rootpass" \
---env MYSQL_USER="dats44" \
---env MYSQL_PASSWORD="sure caught drop" \
+--env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+--env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db2/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db2/datadir:/var/lib/mysql \
 mariadb/server:10.4
@@ -58,23 +58,21 @@ docker run -d \
 --add-host dbgc2:$db2_ip \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
---env MYSQL_ROOT_PASSWORD="rootpass" \
---env MYSQL_USER="dats44" \
---env MYSQL_PASSWORD="sure caught drop" \
+--env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+--env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db3/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db3/datadir:/var/lib/mysql \
 mariadb/server:10.4
 
-printf "\n"
-echo "Inserting Safe to Bootstrap"
+printf "\nInserting Safe to Bootstrap\n"
 
 sleep 5
 
 echo "safe_to_bootstrap: 1" >> ~/volumes/db1/datadir/grastate.dat
 sleep 5
 
-printf "\n"
-echo "Restarting db's"
+printf "\nRestarting db's\n"
 docker restart db1 db2 db3
 
 sleep 5
@@ -88,9 +86,9 @@ docker run -d \
 --add-host dbgc2:$db2_ip \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
---env MYSQL_ROOT_PASSWORD="maxscalepass" \
---env MYSQL_USER="maxscaleuser" \
---env MYSQL_PASSWORD="sure caught drop" \
+--env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+--env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/dbproxy/maxscale.cnf:/etc/maxscale.cnf \
 mariadb/maxscale:latest
 
