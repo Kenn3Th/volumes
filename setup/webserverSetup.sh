@@ -3,18 +3,18 @@ source ~/volumes/setup/parameters.sh
 printf "\nStarting setup for web-servers\n \n"
 
 echo "checking variables"
-echo$web1_ip
-echo$ web2_ip
-echo$ web3_ip
-echo$ lb_ip
-echo$ db1_ip
-echo$ db2_ip
-echo$ db3_ip
-echo$ maxscale_ip
-echo$ DATS_USERNAME
-echo$ MAXSCALEUSER_PASSWORD
-echo$ MYSQL_ROOT_PASSWORD
-echo$ MYSQL_PASSWORD
+echo $web1_ip
+echo $web2_ip
+echo $web3_ip
+echo $lb_ip
+echo $db1_ip
+echo $db2_ip
+echo $db3_ip
+echo $maxscale_ip
+echo $DATS_USERNAME
+echo $MAXSCALEUSER_PASSWORD
+echo $MYSQL_ROOT_PASSWORD
+echo $MYSQL_PASSWORD
 printf "\n\n"
 
 echo "Making web1"
