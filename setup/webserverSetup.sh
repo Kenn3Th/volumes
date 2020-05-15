@@ -35,6 +35,6 @@ docker run -d \
 --add-host lb:$lb_ip \
 --add-host web1:$web1_ip \
 --add-host web2:$web2_ip \
---add-host web3:172.17.0.4 \
+--add-host web3:$web3_ip \
 -v ~/volumes/lb:/usr/local/etc \
 haproxy:latest
