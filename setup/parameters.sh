@@ -7,9 +7,10 @@ db1_ip="172.17.0.6"
 db2_ip="172.17.0.7"
 db3_ip="172.17.0.8"
 maxscale_ip="172.17.0.9"
-#Password section
-MYSQL_ROOT_PASSWORD="maxscalepass" \
+#Password and username section
+DATS_USERNAME="dats4"
 MYSQL_USER="maxscaleuser" \
+MYSQL_ROOT_PASSWORD="maxscalepass" \
 MYSQL_PASSWORD="sure caught drop" \
 
 export web1_ip
