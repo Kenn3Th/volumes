@@ -8,11 +8,11 @@ db2_ip="172.17.0.7"
 db3_ip="172.17.0.8"
 maxscale_ip="172.17.0.9"
 #Password and username section
-DATS_USERNAME="dats44"
-MYSQL_ROOT_PASSWORD="rootpass" \
-MAXSCALEUSER_PASSWORD="maxscalepass" \
-MAXSCALEUSER_USER="maxscaleuser" \
-MYSQL_PASSWORD="sure caught drop" \
+DATS_USERNAME='"dats44"'
+MYSQL_ROOT_PASSWORD='"rootpass"' \
+MAXSCALEUSER_PASSWORD='"maxscalepass"' \
+MAXSCALEUSER_USER='"maxscaleuser"' \
+MYSQL_PASSWORD='"sure caught drop"' \
 
 export web1_ip
 export web2_ip
