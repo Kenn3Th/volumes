@@ -146,11 +146,9 @@ echo "Checking cluster size"
 docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\""'
 echo "It should be cluster size 3"
 
-printf "\n"
-
 sleep 10
 
-printf "Engaging MySQL setup\n"
+printf "\nEngaging MySQL setup\n"
 echo "MySQL setup for db-servers"
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "create user \"dats44\"@\"%\" identified by \"sure caught drop\""'
@@ -184,7 +182,7 @@ docker cp ~/volumes/webapp/database/studentinfo-db.sql db1:/studentinfo-db.sql
 sleep 2
 echo "Checking the databases"
 docker exec db1 bash -c 'mysql -uroot -e "source studentinfo-db.sql"'
-sleep 2
+sleep 2 
 docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
 
 echo "Giving the nesassary privileges to MySQL user"
@@ -203,3 +201,9 @@ sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"dats44\"@\"%\""'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -e "grant select on studentinfo.* to \"dats44\"@\"%\""'
+
+printf "\nFinal check \n \n"
+
+docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
+docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\""'
+docker exec dbproxy maxctrl list servers
