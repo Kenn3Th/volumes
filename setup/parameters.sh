@@ -8,7 +8,7 @@ db2_ip="172.17.0.7"
 db3_ip="172.17.0.8"
 maxscale_ip="172.17.0.9"
 #Password and username section
-DATS_USERNAME="dats4"
+DATS_USERNAME="dats44"
 MYSQL_USER="maxscaleuser" \
 MYSQL_ROOT_PASSWORD="maxscalepass" \
 MYSQL_PASSWORD="sure caught drop" \
