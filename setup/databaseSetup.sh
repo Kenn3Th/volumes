@@ -1,3 +1,5 @@
+source ./parameters.sh
+
 echo "MariaDB database setup with Galera Cluster and Maxscale!"
 
 echo "Creating datadir"
