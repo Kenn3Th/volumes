@@ -205,5 +205,8 @@ docker exec db1 bash -c 'mysql -uroot -e "grant select on studentinfo.* to \"dat
 printf "\nFinal check \n \n"
 
 docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
+printf "\n"
 docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\""'
 docker exec dbproxy maxctrl list servers
+
+printf "\nDone!\n"
