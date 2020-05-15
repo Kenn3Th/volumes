@@ -1,6 +1,6 @@
 source ~/volumes/setup/parameters.sh
 
-echo "MariaDB database setup with Galera Cluster and Maxscale!"
+printf "\nMariaDB database setup with Galera Cluster and Maxscale!\n"
 
 echo "Creating datadir"
 sudo mkdir ~/volumes/db1/datadir
@@ -94,13 +94,11 @@ docker run -d \
 -v ~/volumes/dbproxy/maxscale.cnf:/etc/maxscale.cnf \
 mariadb/maxscale:latest
 
-printf "\n"
-echo "Going to sleep... zzzZZZzzz"
+printf "\nGoing to sleep... zzzZZZzzz\n\n"
 sleep 30
-printf "\n"
 
 
-echo "Reading IPs from containers"
+printf "Reading IPs from containers\n"
 ip_web1=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" web1)
 sleep 1
 ip_web2=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" web2)
@@ -144,9 +142,8 @@ sleep 1
 echo $ip_dbproxy
 docker exec db1 bash -c 'echo '"$ip_dbproxy"'   maxscale>> /etc/hosts'
 
-echo "Hello!! Lets see if this works!"
+printf "\nHello!! Lets see if this works!\n \n"
 
-printf "\n"
 echo "Checking cluster size"
 docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\""'
 echo "It should be cluster size 3"
