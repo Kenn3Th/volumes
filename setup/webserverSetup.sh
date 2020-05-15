@@ -1,6 +1,6 @@
 source ~/volumes/setup/parameters.sh
 
-printf "Starting setup for web-servers\n"
+printf "\nStarting setup for web-servers\n \n"
 
 echo "Making web1"
 docker run -d \
