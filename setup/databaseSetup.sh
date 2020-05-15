@@ -12,10 +12,10 @@ docker run -d \
 --publish "4444" \
 --publish "4567" \
 --publish "4568" \
---add-host dbgc1:172.17.0.6 \
---add-host dbgc2:172.17.0.7 \
---add-host dbgc3:172.17.0.8 \
---add-host maxscale:172.17.0.9 \
+--add-host dbgc1:$db1_ip \
+--add-host dbgc2:$db2_ip \
+--add-host dbgc3:$db3_ip \
+--add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
@@ -32,10 +32,10 @@ docker run -d \
 --publish "4444" \
 --publish "4567" \
 --publish "4568" \
---add-host dbgc1:172.17.0.6 \
---add-host dbgc2:172.17.0.7 \
---add-host dbgc3:172.17.0.8 \
---add-host maxscale:172.17.0.9 \
+--add-host dbgc1:$db1_ip \
+--add-host dbgc2:$db2_ip \
+--add-host dbgc3:$db3_ip \
+--add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
@@ -52,10 +52,10 @@ docker run -d \
 --publish "4444" \
 --publish "4567" \
 --publish "4568" \
---add-host dbgc1:172.17.0.6 \
---add-host dbgc2:172.17.0.7 \
---add-host dbgc3:172.17.0.8 \
---add-host maxscale:172.17.0.9 \
+--add-host dbgc1:$db1_ip \
+--add-host dbgc2:$db2_ip \
+--add-host dbgc3:$db3_ip \
+--add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="rootpass" \
 --env MYSQL_USER="dats44" \
 --env MYSQL_PASSWORD="sure caught drop" \
@@ -82,10 +82,10 @@ echo "Making dbproxy"
 docker run -d \
 --name dbproxy \
 --publish "3306:3306" \
---add-host dbgc1:172.17.0.6 \
---add-host dbgc2:172.17.0.7 \
---add-host dbgc3:172.17.0.8 \
---add-host maxscale:172.17.0.9 \
+--add-host dbgc1:$db1_ip \
+--add-host dbgc2:$db2_ip \
+--add-host dbgc3:$db3_ip \
+--add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="maxscalepass" \
 --env MYSQL_USER="maxscaleuser" \
 --env MYSQL_PASSWORD="sure caught drop" \
