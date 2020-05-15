@@ -86,9 +86,9 @@ docker run -d \
 --add-host dbgc2:$db2_ip \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
---env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
---env MYSQL_USER="$MYSQL_USER" \
---env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+--env MYSQL_ROOT_PASSWORD="$MAXSCALEUSER_PASSWORD" \
+--env MYSQL_USER="$MAXSCALEUSER_USER" \
+--env MYSQL_PASSWORD="MYSQL_PASSWORD" \
 -v ~/volumes/dbproxy/maxscale.cnf:/etc/maxscale.cnf \
 mariadb/maxscale:latest
 
@@ -151,21 +151,21 @@ sleep 10
 printf "\nEngaging MySQL setup\n"
 echo "MySQL setup for db-servers"
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "create user \"dats44\"@\"%\" identified by \"sure caught drop\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"$DATS_USERNAME\"@\"%\" identified by \"sure caught drop\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant select on mysql.user to \"dats44\"@\"%\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
 
 echo "MySQL setup for MaxscaleUser"
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "create user \"maxscaleuser\"@\"172.17.0.9\" identified by \"sure caught drop\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"maxscaleuser\"@\"172.17.0.9\" identified by \"sure caught drop\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant select on mysql.user to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant select on mysql.db to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.db to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant select on mysql.tables_priv to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.tables_priv to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant show databases on *.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant show databases on *.* to \"maxscaleuser\"@\"172.17.0.9\""'
 
 
 sleep 5
@@ -187,20 +187,20 @@ docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
 
 echo "Giving the nesassary privileges to MySQL user"
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant UPDATE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant UPDATE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant DELETE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant DELETE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant INSERT on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
 
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant UPDATE on studentinfo.* to \"dats44\"@\"%\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant UPDATE on studentinfo.* to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant DELETE on studentinfo.* to \"dats44\"@\"%\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant DELETE on studentinfo.* to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"dats44\"@\"%\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant INSERT on studentinfo.* to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -e "grant select on studentinfo.* to \"dats44\"@\"%\""'
+docker exec db1 bash -c 'mysql -uroot -e "grant select on studentinfo.* to \"$DATS_USERNAME\"@\"%\""'
 
 printf "\nFinal check \n \n"
 
