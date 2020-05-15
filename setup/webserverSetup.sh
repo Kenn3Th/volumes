@@ -1,3 +1,5 @@
+source ./parameter.sh
+
 printf "Starting setup for web-servers\n"
 
 echo "Making web1"
