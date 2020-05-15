@@ -150,21 +150,21 @@ sleep 10
 printf "\nEngaging MySQL setup\n"
 echo "MySQL setup for db-servers"
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"$DATS_USERNAME\"@\"%\" identified by \"sure caught drop\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"$DATS_USERNAME\"@\"%\" identified by \"$MYSQL_PASSWORD\""'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
 
 echo "MySQL setup for MaxscaleUser"
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"maxscaleuser\"@\"172.17.0.9\" identified by \"sure caught drop\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\" identified by \"$MYSQL_PASSWORD\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.db to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.db to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.tables_priv to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.tables_priv to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant show databases on *.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant show databases on *.* to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 
 
 sleep 5
@@ -186,11 +186,11 @@ docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
 
 echo "Giving the nesassary privileges to MySQL user"
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant UPDATE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant UPDATE on studentinfo.* to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant DELETE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant DELETE on studentinfo.* to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant INSERT on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant INSERT on studentinfo.* to \"$MAXSCALEUSER_USER\"@\"$maxscale_ip\""'
 
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant UPDATE on studentinfo.* to \"$DATS_USERNAME\"@\"%\""'
