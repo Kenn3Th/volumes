@@ -1,4 +1,4 @@
-source ./parameter.sh
+source ./parameters.sh
 
 printf "Starting setup for web-servers\n"
 
