@@ -18,7 +18,7 @@ docker run -d \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
---env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_USER="$DATS_USERNAME" \
 --env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db1/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db1/datadir:/var/lib/mysql \
@@ -38,7 +38,7 @@ docker run -d \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
---env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_USER="$$DATS_USERNAME" \
 --env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db2/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db2/datadir:/var/lib/mysql \
@@ -58,7 +58,7 @@ docker run -d \
 --add-host dbgc3:$db3_ip \
 --add-host maxscale:$maxscale_ip \
 --env MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
---env MYSQL_USER="$MYSQL_USER" \
+--env MYSQL_USER="$$DATS_USERNAME" \
 --env MYSQL_PASSWORD="$MYSQL_PASSWORD" \
 -v ~/volumes/db3/conf.d:/etc/mysql/mariadb.conf.d \
 -v ~/volumes/db3/datadir:/var/lib/mysql \
