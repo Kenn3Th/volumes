@@ -1,4 +1,4 @@
-source ./parameters.sh
+source ~/volumes/setup/parameters.sh
 
 printf "Starting setup for web-servers\n"
 
