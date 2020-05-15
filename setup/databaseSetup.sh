@@ -3,6 +3,7 @@ source ~/volumes/setup/parameters.sh
 printf "\nMariaDB database setup with Galera Cluster and Maxscale!\n \n"
 
 echo "Creating datadir"
+sudo mkdir ~/volumes/db1/datadir
 sudo mkdir ~/volumes/db2/datadir
 sudo mkdir ~/volumes/db3/datadir
 
