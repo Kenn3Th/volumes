@@ -140,7 +140,7 @@ sleep 1
 echo $ip_dbproxy
 docker exec db1 bash -c 'echo '"$ip_dbproxy"'   maxscale>> /etc/hosts'
 
-printf "\nHello!! Lets see if this works!\n \n"
+printf "\nChecking cluster size!\n \n"
 
 echo "Checking cluster size"
 docker exec db1 bash -c 'mysql -uroot -e "show status like \"wsrep_cluster_size\""'
@@ -150,6 +150,7 @@ printf "\n"
 
 sleep 10
 
+printf "Engaging MySQL setup\n"
 echo "MySQL setup for db-servers"
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "create user \"dats44\"@\"%\" identified by \"sure caught drop\""'
@@ -169,6 +170,24 @@ sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant show databases on *.* to \"maxscaleuser\"@\"172.17.0.9\""'
 
 
+sleep 5
+printf "\nRestarting dbproxy\n"
+docker restart dbproxy
+
+sleep 5
+
+printf "\nChecking if servers are online\n"
+docker exec dbproxy maxctrl list servers
+
+printf "\ncopying studentinfo to db containers\n"
+docker cp ~/volumes/webapp/database/studentinfo-db.sql db1:/studentinfo-db.sql
+sleep 2
+echo "Checking the databases"
+docker exec db1 bash -c 'mysql -uroot -e "source studentinfo-db.sql"'
+sleep 2
+docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
+
+echo "Giving the nesassary privileges to MySQL user"
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant UPDATE on studentinfo.* to \"maxscaleuser\"@\"172.17.0.9\""'
 sleep 2
@@ -182,26 +201,5 @@ sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant DELETE on studentinfo.* to \"dats44\"@\"%\""'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=rootpass -e "grant INSERT on studentinfo.* to \"dats44\"@\"%\""'
-
-
-sleep 5
-printf "\n"
-echo "Restarting dbproxy"
-docker restart dbproxy
-
-sleep 5
-
-printf "\n"
-echo "Checking if servers are online"
-docker exec dbproxy maxctrl list servers
-
-printf "\n"
-echo "copying studentinfo to db containers"
-docker cp ~/volumes/webapp/database/studentinfo-db.sql db1:/studentinfo-db.sql
-sleep 2
-echo "Checking the databases"
-docker exec db1 bash -c 'mysql -uroot -e "source studentinfo-db.sql"'
-sleep 2
-docker exec db1 bash -c 'mysql -uroot -e "show DATABASES"'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -e "grant select on studentinfo.* to \"dats44\"@\"%\""'
