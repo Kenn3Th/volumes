@@ -10,7 +10,9 @@ export maxscale_ip="172.17.0.9"
 #Password and username section
 export DATS_USERNAME="dats44"
 export MYSQL_USER="maxscaleuser" \
-export MYSQL_ROOT_PASSWORD="maxscalepass" \
+export MYSQL_ROOT_PASSWORD="rootpass" \
+export MAXSCALEUSER_PASSWORD="maxscalepass" \
+export MAXSCALEUSER_USER="maxscaleuser" \
 export MYSQL_PASSWORD="sure caught drop" \
 
 #export web1_ip
