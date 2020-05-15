@@ -1,4 +1,4 @@
-source ./parameters.sh
+source ~/volumes/setup/parameters.sh
 
 echo "MariaDB database setup with Galera Cluster and Maxscale!"
 
