@@ -150,7 +150,7 @@ sleep 10
 printf "\nEngaging MySQL setup\n"
 echo "MySQL setup for db-servers"
 sleep 2
-docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user "$DATS_USERNAME"@\"%\" identified by "$MYSQL_PASSWORD""'
+docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "create user \"$DATS_USERNAME\"@\"%\" identified by \"$MYSQL_PASSWORD\""'
 sleep 2
 docker exec db1 bash -c 'mysql -uroot -p --password=$MYSQL_ROOT_PASSWORD -e "grant select on mysql.user to \"$DATS_USERNAME\"@\"%\""'
 sleep 2
